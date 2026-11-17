@@ -1,0 +1,80 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:AlgorithmsLab3.App.ViewModels"
+        x:Class="AlgorithmsLab3.App.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Title="Алгоритмы · Лабораторная №3 · Динамические структуры"
+        Width="1240"
+        Height="700"
+        MinWidth="1000"
+        MinHeight="620"
+        WindowState="Maximized"
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource AppBackgroundBrush}">
+
+  <Grid ColumnDefinitions="286,*" Margin="12">
+
+    <Border Grid.Column="0" Classes="panel" Margin="0,0,12,0" ClipToBounds="True">
+      <DockPanel Margin="14">
+
+        <StackPanel DockPanel.Dock="Top" Spacing="3" Margin="2,0,2,10">
+          <Border Width="38" Height="38" CornerRadius="11"
+                  Background="{DynamicResource AppAccentSoftBrush}"
+                  HorizontalAlignment="Left" Margin="0,0,0,6">
+            <TextBlock Text="DS" FontSize="14" FontWeight="Bold"
+                       Foreground="{DynamicResource AppAccentBrush}"
+                       HorizontalAlignment="Center" VerticalAlignment="Center" />
+          </Border>
+          <TextBlock Classes="app-title" Text="Динамические структуры" TextWrapping="Wrap" />
+          <TextBlock Classes="muted" Text="Практическое занятие №3 · C# + Avalonia" />
+        </StackPanel>
+
+        <StackPanel DockPanel.Dock="Bottom" Spacing="6" Margin="2,8,2,2">
+          <Separator />
+          <TextBlock Classes="section" Text="ОФОРМЛЕНИЕ" />
+          <ToggleSwitch IsChecked="{Binding IsDarkTheme}"
+                        OnContent="Тёмная тема"
+                        OffContent="Светлая тема" />
+          <TextBlock Classes="muted" FontSize="10"
+                     Text="Замеры выполняются на вашей машине и сохраняются в CSV." />
+        </StackPanel>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+          <StackPanel Spacing="4">
+            <TextBlock Classes="section" Text="РАЗДЕЛЫ РАБОТЫ" />
+            <ListBox Classes="nav"
+                     ItemsSource="{Binding Items}"
+                     SelectedItem="{Binding SelectedItem}">
+              <ListBox.ItemTemplate>
+                <DataTemplate x:DataType="vm:NavigationItem">
+                  <Grid ColumnDefinitions="36,*">
+                    <Border Width="28" Height="28" CornerRadius="8"
+                            Background="{DynamicResource AppChipBrush}"
+                            VerticalAlignment="Center">
+                      <TextBlock Text="{Binding Badge}" FontWeight="Bold" FontSize="11"
+                                 Foreground="{DynamicResource AppAccentBrush}"
+                                 HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <StackPanel Grid.Column="1" Spacing="0" Margin="2,0,0,0">
+                      <TextBlock Text="{Binding Title}" FontWeight="SemiBold" FontSize="12.5"
+                                 Foreground="{DynamicResource AppTextBrush}" />
+                      <TextBlock Text="{Binding Subtitle}" Classes="muted" FontSize="10" />
+                    </StackPanel>
+                  </Grid>
+                </DataTemplate>
+              </ListBox.ItemTemplate>
+            </ListBox>
+          </StackPanel>
+        </ScrollViewer>
+
+      </DockPanel>
+    </Border>
+
+    <ContentControl Grid.Column="1"
+                    ClipToBounds="True"
+                    Content="{Binding SelectedItem.Content}"
+                    HorizontalContentAlignment="Stretch"
+                    VerticalContentAlignment="Stretch" />
+
+  </Grid>
+</Window>

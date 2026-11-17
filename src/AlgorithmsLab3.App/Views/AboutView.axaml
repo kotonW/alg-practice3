@@ -1,0 +1,89 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:AlgorithmsLab3.App.ViewModels"
+             x:Class="AlgorithmsLab3.App.Views.AboutView"
+             x:DataType="vm:AboutPageViewModel">
+
+  <ScrollViewer>
+    <StackPanel Margin="24,18,24,24" Spacing="16" MaxWidth="1150" HorizontalAlignment="Left">
+
+      <StackPanel Spacing="4">
+        <TextBlock Classes="section" Text="О РАБОТЕ" />
+        <TextBlock Classes="page-title" Text="Лабораторная №3 · динамические структуры" />
+        <TextBlock Classes="muted"
+                   Text="Приложение полностью написано на C# с UI на Avalonia. Доменные структуры и алгоритмы вынесены в отдельный проект без зависимостей от UI." />
+      </StackPanel>
+
+      <Border Classes="panel" Padding="18">
+        <StackPanel Spacing="10">
+          <TextBlock Classes="section" Text="ЧТО РЕАЛИЗОВАНО" />
+          <TextBlock Classes="info"
+                     Text="Часть 1. Стек на собственном связном списке, команды 1–5 из input.txt, замеры, постфиксный калькулятор, перевод инфиксной записи в постфиксную." />
+          <TextBlock Classes="info"
+                     Text="Часть 2. Очередь на собственном списке и через стандартный Queue&lt;T&gt;, общий протокол выполнения, автоматическое сравнение результатов, замеры для разных по длине и составу наборов." />
+          <TextBlock Classes="info"
+                     Text="Часть 3. Применения динамических структур: обнаружение цикла в списке алгоритмом Флойда, итеративный DFS графа на стеке, BST как динамическое множество." />
+          <TextBlock Classes="info"
+                     Text="Часть 4. 12 алгоритмов над собственным связным списком: переворот, переносы, уникальность, вставки/удаления, разбиение, удвоение, обмен узлов." />
+        </StackPanel>
+      </Border>
+
+      <Border Classes="panel" Padding="18">
+        <StackPanel Spacing="10">
+          <TextBlock Classes="section" Text="ОЦЕНКА СЛОЖНОСТИ" />
+          <Grid ColumnDefinitions="2*,3*,1.5*,1.2*" Margin="4,4,4,2">
+            <TextBlock Classes="section" Text="СТРУКТУРА" Margin="0" />
+            <TextBlock Grid.Column="1" Classes="section" Text="ОПЕРАЦИЯ" Margin="0" />
+            <TextBlock Grid.Column="2" Classes="section" Text="ВРЕМЯ" Margin="0" />
+            <TextBlock Grid.Column="3" Classes="section" Text="ПАМЯТЬ" Margin="0" />
+          </Grid>
+          <ItemsControl ItemsSource="{Binding ComplexityRows}">
+            <ItemsControl.ItemTemplate>
+              <DataTemplate x:DataType="vm:ComplexityRow">
+                <Border Classes="log-row">
+                  <Grid ColumnDefinitions="2*,3*,1.5*,1.2*">
+                    <TextBlock Text="{Binding Structure}" Classes="value" />
+                    <TextBlock Grid.Column="1" Text="{Binding Operation}" Classes="info" />
+                    <TextBlock Grid.Column="2" Text="{Binding Time}" Classes="mono" />
+                    <TextBlock Grid.Column="3" Text="{Binding Memory}" Classes="mono" />
+                  </Grid>
+                </Border>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+        </StackPanel>
+      </Border>
+
+      <Grid ColumnDefinitions="*,*" ColumnSpacing="16">
+        <Border Grid.Column="0" Classes="panel" Padding="18">
+          <StackPanel Spacing="8">
+            <TextBlock Classes="section" Text="СТРУКТУРА ПРОЕКТА" />
+            <TextBlock Classes="mono" TextWrapping="Wrap"
+                       Text="Algorithms_lab3/&#10;  src/AlgorithmsLab3.Domain/&#10;    Stacks/ LinkedStack.cs&#10;    Queues/ LinkedQueue.cs&#10;    Lists/ IntLinkedList.cs&#10;    Expressions/ postfix + shunting yard&#10;    Applications/ Floyd, DFS, BST&#10;    Benchmarks/ сценарии замеров&#10;  src/AlgorithmsLab3.App/&#10;    ViewModels/ страницы&#10;    Views/ Avalonia XAML&#10;    Controls/ визуализация&#10;  tests/AlgorithmsLab3.Tests/" />
+            <TextBlock Classes="muted"
+                       Text="Доменный проект не ссылается на Avalonia: алгоритмы можно проверить тестами и использовать отдельно." />
+          </StackPanel>
+        </Border>
+
+        <Border Grid.Column="1" Classes="panel" Padding="18">
+          <StackPanel Spacing="8">
+            <TextBlock Classes="section" Text="ЗАПУСК" />
+            <TextBlock Classes="mono" TextWrapping="Wrap"
+                       Text="dotnet restore&#10;dotnet build&#10;dotnet run --project src/AlgorithmsLab3.App" />
+            <TextBlock Classes="section" Text="ЗАМЕРЫ" Margin="0,8,0,0" />
+            <TextBlock Classes="muted"
+                       Text="Кнопка «Запустить замеры» создаёт наборы во временной папке, читает их с диска и замеряет выполнение. Результаты можно выгрузить в CSV и вставить в отчёт. Для очереди отдельно показаны чтение, выполнение и суммарное время каждой реализации." />
+            <TextBlock Classes="section" Text="ТЕСТЫ" Margin="0,8,0,0" />
+            <TextBlock Classes="mono" Text="dotnet test" />
+          </StackPanel>
+        </Border>
+      </Grid>
+
+      <Border Classes="card">
+        <TextBlock Classes="muted"
+                   Text="Совет для отчёта: запустите замеры несколько раз, возьмите медианные значения и занесите в таблицу размер набора, состав операций, время чтения и время выполнения. Для очереди сравните одинаковые по длине наборы с разным составом — это требование части 2." />
+      </Border>
+
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>

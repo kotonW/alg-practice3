@@ -1,0 +1,72 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:AlgorithmsLab3.App.ViewModels"
+             xmlns:views="using:AlgorithmsLab3.App.Views"
+             x:Class="AlgorithmsLab3.App.App"
+             RequestedThemeVariant="Dark">
+
+  <Application.DataTemplates>
+    <DataTemplate DataType="vm:StackPageViewModel">
+      <views:StackView />
+    </DataTemplate>
+    <DataTemplate DataType="vm:QueuePageViewModel">
+      <views:QueueView />
+    </DataTemplate>
+    <DataTemplate DataType="vm:CyclePageViewModel">
+      <views:CycleView />
+    </DataTemplate>
+    <DataTemplate DataType="vm:DfsPageViewModel">
+      <views:DfsView />
+    </DataTemplate>
+    <DataTemplate DataType="vm:BstPageViewModel">
+      <views:BstView />
+    </DataTemplate>
+    <DataTemplate DataType="vm:LinkedListPageViewModel">
+      <views:LinkedListView />
+    </DataTemplate>
+    <DataTemplate DataType="vm:AboutPageViewModel">
+      <views:AboutView />
+    </DataTemplate>
+  </Application.DataTemplates>
+
+  <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.ThemeDictionaries>
+        <ResourceDictionary x:Key="Dark">
+          <SolidColorBrush x:Key="AppBackgroundBrush" Color="#0E1117" />
+          <SolidColorBrush x:Key="AppPanelBrush" Color="#161A22" />
+          <SolidColorBrush x:Key="AppPanelAltBrush" Color="#1C212B" />
+          <SolidColorBrush x:Key="AppBorderBrush" Color="#2A3140" />
+          <SolidColorBrush x:Key="AppTextBrush" Color="#E8ECF4" />
+          <SolidColorBrush x:Key="AppMutedBrush" Color="#8E98AA" />
+          <SolidColorBrush x:Key="AppAccentBrush" Color="#5B9CFF" />
+          <SolidColorBrush x:Key="AppAccentSoftBrush" Color="#233A5E" />
+          <SolidColorBrush x:Key="AppGoodBrush" Color="#54D18C" />
+          <SolidColorBrush x:Key="AppWarnBrush" Color="#F2B84B" />
+          <SolidColorBrush x:Key="AppBadBrush" Color="#F06A6A" />
+          <SolidColorBrush x:Key="AppChipBrush" Color="#20283A" />
+        </ResourceDictionary>
+        <ResourceDictionary x:Key="Light">
+          <SolidColorBrush x:Key="AppBackgroundBrush" Color="#F1F4F9" />
+          <SolidColorBrush x:Key="AppPanelBrush" Color="#FFFFFF" />
+          <SolidColorBrush x:Key="AppPanelAltBrush" Color="#F6F8FC" />
+          <SolidColorBrush x:Key="AppBorderBrush" Color="#D9E0EB" />
+          <SolidColorBrush x:Key="AppTextBrush" Color="#1B202A" />
+          <SolidColorBrush x:Key="AppMutedBrush" Color="#667085" />
+          <SolidColorBrush x:Key="AppAccentBrush" Color="#2563EB" />
+          <SolidColorBrush x:Key="AppAccentSoftBrush" Color="#DCE8FF" />
+          <SolidColorBrush x:Key="AppGoodBrush" Color="#15803D" />
+          <SolidColorBrush x:Key="AppWarnBrush" Color="#B45309" />
+          <SolidColorBrush x:Key="AppBadBrush" Color="#DC2626" />
+          <SolidColorBrush x:Key="AppChipBrush" Color="#E9EEF7" />
+        </ResourceDictionary>
+      </ResourceDictionary.ThemeDictionaries>
+    </ResourceDictionary>
+  </Application.Resources>
+
+  <Application.Styles>
+    <FluentTheme />
+    <StyleInclude Source="avares://AlgorithmsLab3.App/Styles/AppStyles.axaml" />
+  </Application.Styles>
+
+</Application>

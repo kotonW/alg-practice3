@@ -1,0 +1,108 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:AlgorithmsLab3.App.ViewModels"
+             xmlns:app="using:AlgorithmsLab3.Domain.Applications"
+             xmlns:controls="using:AlgorithmsLab3.App.Controls"
+             x:Class="AlgorithmsLab3.App.Views.CycleView"
+             x:DataType="vm:CyclePageViewModel">
+
+  <ScrollViewer>
+    <StackPanel Margin="24,18,24,24" Spacing="16">
+
+      <StackPanel Spacing="4">
+        <TextBlock Classes="section" Text="ЧАСТЬ 3 · СВЯЗНЫЙ СПИСОК" />
+        <TextBlock Classes="page-title" Text="Обнаружение цикла: черепаха и заяц" />
+        <TextBlock Classes="muted" MaxWidth="1050"
+                   Text="Алгоритм Флойда использует два указателя: черепаха идёт на один узел, заяц — на два. Если они встретились, цикл есть. Затем один указатель возвращается к голове, и оба идут по одному шагу до входа в цикл." />
+      </StackPanel>
+
+      <Border Classes="panel" Padding="16">
+        <StackPanel Spacing="6">
+          <TextBlock Classes="section" Text="ВИЗУАЛИЗАЦИЯ СПИСКА" />
+          <controls:CycleListCanvas Height="270" Visualization="{Binding Visualization}" />
+          <TextBlock Classes="muted" Text="{Binding ListDescription}" />
+        </StackPanel>
+      </Border>
+
+      <StackPanel Spacing="16">
+
+        <Border Classes="panel" Padding="16">
+          <StackPanel Spacing="10">
+            <TextBlock Classes="section" Text="ПАРАМЕТРЫ СПИСКА" />
+            <TextBlock Classes="app-title" Text="Значения узлов" />
+            <TextBox Text="{Binding ValuesText}" Classes="mono" Height="82"
+                     AcceptsReturn="True" TextWrapping="Wrap" />
+            <TextBlock Classes="muted" Text="Например: 3 1 4 1 5 9 2 6" />
+
+            <CheckBox IsChecked="{Binding CreateCycle}"
+                      Content="Замкнуть хвост списка на узел" />
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+              <TextBox Text="{Binding CycleIndexText}" Classes="mono" />
+              <TextBlock Grid.Column="1" Classes="muted" VerticalAlignment="Center"
+                         Text="индекс с 0" />
+            </Grid>
+
+            <WrapPanel ItemSpacing="8" LineSpacing="8">
+              <Button Classes="primary" Content="Построить и найти цикл"
+                      Command="{Binding BuildAndDetectCommand}" />
+              <Button Classes="ghost" Content="Случайный с циклом" Command="{Binding RandomExampleCommand}" />
+              <Button Classes="ghost" Content="Без цикла" Command="{Binding LinearExampleCommand}" />
+            </WrapPanel>
+
+            <TextBlock Classes="muted" Text="{Binding Status}" />
+
+            <Border Classes="card">
+              <StackPanel Spacing="4">
+                <TextBlock Classes="section" Text="СЛОЖНОСТЬ" />
+                <TextBlock Classes="info" Text="Время: O(n)" />
+                <TextBlock Classes="info" Text="Память: O(1) — только два указателя" />
+                <TextBlock Classes="muted"
+                           Text="Цикл обнаруживается без хранения посещённых узлов и без изменения списка." />
+              </StackPanel>
+            </Border>
+          </StackPanel>
+        </Border>
+
+        <Border Classes="panel" Padding="16">
+          <StackPanel Spacing="10">
+            <TextBlock Classes="section" Text="РЕЗУЛЬТАТ" />
+            <TextBlock Classes="page-title" FontSize="22" Text="{Binding ResultTitle}" />
+            <TextBlock Classes="info" Text="{Binding ResultDetails}" />
+
+            <Grid ColumnDefinitions="50,*,*,*" Margin="4,10,4,4">
+              <TextBlock Classes="section" Text="ШАГ" Margin="0" />
+              <TextBlock Grid.Column="1" Classes="section" Text="ЧЕРЕПАХА" Margin="0" />
+              <TextBlock Grid.Column="2" Classes="section" Text="ЗАЯЦ" Margin="0" />
+              <TextBlock Grid.Column="3" Classes="section" Text="СОБЫТИЕ" Margin="0" />
+            </Grid>
+            <ScrollViewer Height="300" VerticalScrollBarVisibility="Auto">
+              <ItemsControl ItemsSource="{Binding Trace}">
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate x:DataType="app:FloydStep">
+                    <Border Classes="log-row">
+                      <Grid ColumnDefinitions="50,*,*,*">
+                        <TextBlock Text="{Binding Step}" Classes="muted" />
+                        <TextBlock Grid.Column="1" Text="{Binding TortoiseText}" Classes="mono" />
+                        <TextBlock Grid.Column="2" Text="{Binding HareText}" Classes="mono" />
+                        <TextBlock Grid.Column="3" Text="{Binding Mark}" Classes="good" FontWeight="SemiBold" />
+                      </Grid>
+                    </Border>
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+            </ScrollViewer>
+
+            <Border Classes="card">
+              <StackPanel Spacing="4">
+                <TextBlock Classes="section" Text="КАК ЧИТАТЬ РЕЗУЛЬТАТ" />
+                <TextBlock Classes="muted"
+                           Text="Зелёный узел — вход в цикл, оранжевый — место встречи указателей. Петля под узлами показывает замыкание хвоста. Если заяц дошёл до null, список линейный." />
+              </StackPanel>
+            </Border>
+          </StackPanel>
+        </Border>
+      </StackPanel>
+
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>

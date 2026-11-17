@@ -1,0 +1,220 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:AlgorithmsLab3.App.ViewModels"
+             x:Class="AlgorithmsLab3.App.Views.LinkedListView"
+             x:DataType="vm:LinkedListPageViewModel">
+
+  <ScrollViewer>
+    <StackPanel Margin="24,18,24,24" Spacing="16">
+
+      <StackPanel Spacing="4">
+        <TextBlock Classes="section" Text="ЧАСТЬ 4 · АЛГОРИТМЫ СО СПИСКОМ" />
+        <TextBlock Classes="page-title" Text="12 операций над собственным связным списком" />
+        <TextBlock Classes="muted" MaxWidth="1100"
+                   Text="Список реализован через узлы SinglyNode&lt;int&gt; и ссылки Next. Операции перестраивают ссылки, а не используют List&lt;T&gt;. Журнал показывает результат каждой операции; длинные списки сокращаются при печати." />
+      </StackPanel>
+
+      <Border Classes="panel" Padding="16">
+        <StackPanel Spacing="10">
+          <Grid ColumnDefinitions="*,Auto">
+            <StackPanel Spacing="2">
+              <TextBlock Classes="section" Text="ТЕКУЩИЙ СПИСОК" />
+              <TextBlock Classes="app-title" Text="Содержимое" />
+            </StackPanel>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
+              <TextBlock Classes="muted" Text="Элементов:" />
+              <TextBlock Classes="big-value" Text="{Binding CountText}" />
+            </StackPanel>
+          </Grid>
+
+          <ScrollViewer MaxHeight="150" VerticalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding Items}">
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <WrapPanel />
+                </ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+              <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="vm:ListValueChip">
+                  <Border Classes="chip">
+                    <TextBlock Text="{Binding Value}" Classes="mono" />
+                  </Border>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </ScrollViewer>
+
+          <TextBlock Classes="mono" Text="{Binding CurrentList}" TextWrapping="Wrap" />
+
+          <Grid ColumnDefinitions="*,Auto,Auto,Auto,Auto,Auto" ColumnSpacing="8">
+            <TextBox Text="{Binding ValuesText}" Classes="mono" Watermark="Значения через пробел" />
+            <Button Grid.Column="1" Classes="primary" Content="Применить" Command="{Binding ApplyValuesCommand}" />
+            <Button Grid.Column="2" Classes="ghost" Content="Файл…" Click="LoadFileClick" />
+            <Button Grid.Column="3" Classes="ghost" Content="Пример" Command="{Binding LoadSampleCommand}" />
+            <Button Grid.Column="4" Classes="ghost" Content="Случайный" Command="{Binding GenerateRandomCommand}" />
+            <Button Grid.Column="5" Classes="ghost" Content="Очистить" Command="{Binding ClearCommand}" />
+          </Grid>
+
+          <TextBlock Classes="muted" Text="{Binding Status}" />
+          <TextBlock Classes="muted" Text="{Binding Hint}" />
+        </StackPanel>
+      </Border>
+
+      <TextBlock Classes="section" Text="ОПЕРАЦИИ" />
+
+      <WrapPanel ItemSpacing="12" LineSpacing="12">
+
+        <Border Classes="card" Width="330">
+          <StackPanel Spacing="8">
+            <TextBlock Classes="value" Text="Перевернуть список" />
+            <TextBlock Classes="muted" Text="Изменяет ссылки Next так, чтобы порядок стал обратным. O(n), O(1)." />
+            <Button Classes="primary" Content="Выполнить" Command="{Binding ReverseCommand}" />
+          </StackPanel>
+        </Border>
+
+        <Border Classes="card" Width="330">
+          <StackPanel Spacing="8">
+            <TextBlock Classes="value" Text="Последний → начало" />
+            <TextBlock Classes="muted" Text="Переносит хвост в голову непустого списка. O(n)." />
+            <Button Classes="primary" Content="Выполнить" Command="{Binding MoveLastToFrontCommand}" />
+          </StackPanel>
+        </Border>
+
+        <Border Classes="card" Width="330">
+          <StackPanel Spacing="8">
+            <TextBlock Classes="value" Text="Первый → конец" />
+            <TextBlock Classes="muted" Text="Переносит голову в хвост непустого списка. O(n)." />
+            <Button Classes="primary" Content="Выполнить" Command="{Binding MoveFirstToEndCommand}" />
+          </StackPanel>
+        </Border>
+
+        <Border Classes="card" Width="330">
+          <StackPanel Spacing="8">
+            <TextBlock Classes="value" Text="Различные элементы" />
+            <TextBlock Classes="muted" Text="Считает количество разных значений через HashSet. O(n)." />
+            <Button Classes="primary" Content="Посчитать" Command="{Binding CountDistinctCommand}" />
+          </StackPanel>
+        </Border>
+
+        <Border Classes="card" Width="330">
+          <StackPanel Spacing="8">
+            <TextBlock Classes="value" Text="Удалить неуникальные" />
+            <TextBlock Classes="muted" Text="Оставляет только значения, встречающиеся ровно один раз. O(n)." />
+            <Button Classes="primary" Content="Выполнить" Command="{Binding RemoveNonUniqueCommand}" />
+          </StackPanel>
+        </Border>
+
+        <Border Classes="card" Width="330">
+          <StackPanel Spacing="8">
+            <TextBlock Classes="value" Text="Удвоить список" />
+            <TextBlock Classes="muted" Text="Приписывает в конец копию всех элементов. O(n)." />
+            <Button Classes="primary" Content="Выполнить" Command="{Binding DoubleListCommand}" />
+          </StackPanel>
+        </Border>
+
+        <Border Classes="card" Width="330">
+          <StackPanel Spacing="8">
+            <TextBlock Classes="value" Text="Вставка по порядку" />
+            <TextBlock Classes="muted" Text="Вставляет значение в список, упорядоченный по неубыванию. O(n)." />
+            <TextBox Text="{Binding SortedValueText}" Classes="mono" Watermark="Новое значение" />
+            <Button Classes="primary" Content="Вставить" Command="{Binding InsertSortedCommand}" />
+          </StackPanel>
+        </Border>
+
+        <Border Classes="card" Width="330">
+          <StackPanel Spacing="8">
+            <TextBlock Classes="value" Text="Удалить все E" />
+            <TextBlock Classes="muted" Text="Удаляет все вхождения значения E. O(n)." />
+            <TextBox Text="{Binding ElementEText}" Classes="mono" Watermark="E" />
+            <Button Classes="primary" Content="Удалить" Command="{Binding RemoveAllECommand}" />
+          </StackPanel>
+        </Border>
+
+        <Border Classes="card" Width="330">
+          <StackPanel Spacing="8">
+            <TextBlock Classes="value" Text="Вставить F перед E" />
+            <TextBlock Classes="muted" Text="Ищет первое вхождение E и вставляет перед ним F. O(n)." />
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+              <TextBox Text="{Binding ElementEText}" Classes="mono" Watermark="E" />
+              <TextBox Grid.Column="1" Text="{Binding ElementFText}" Classes="mono" Watermark="F" />
+            </Grid>
+            <Button Classes="primary" Content="Вставить" Command="{Binding InsertBeforeECommand}" />
+          </StackPanel>
+        </Border>
+
+        <Border Classes="card" Width="330">
+          <StackPanel Spacing="8">
+            <TextBlock Classes="value" Text="Список в самого себя" />
+            <TextBlock Classes="muted" Text="После первого вхождения x вставляет копию всего списка. O(n)." />
+            <TextBox Text="{Binding XText}" Classes="mono" Watermark="x" />
+            <Button Classes="primary" Content="Вставить копию" Command="{Binding InsertSelfAfterXCommand}" />
+          </StackPanel>
+        </Border>
+
+        <Border Classes="card" Width="330">
+          <StackPanel Spacing="8">
+            <TextBlock Classes="value" Text="Дописать второй список" />
+            <TextBlock Classes="muted" Text="Создаёт второй список из чисел и дописывает его в конец." />
+            <TextBox Text="{Binding SecondListText}" Classes="mono" Watermark="10 20 30" />
+            <Button Classes="primary" Content="Дописать" Command="{Binding AppendSecondListCommand}" />
+          </StackPanel>
+        </Border>
+
+        <Border Classes="card" Width="330">
+          <StackPanel Spacing="8">
+            <TextBlock Classes="value" Text="Разбить по x" />
+            <TextBlock Classes="muted" Text="Первый список — до x, второй — начиная с первого вхождения x." />
+            <TextBox Text="{Binding XText}" Classes="mono" Watermark="x" />
+            <Button Classes="primary" Content="Разбить" Command="{Binding SplitByXCommand}" />
+          </StackPanel>
+        </Border>
+
+        <Border Classes="card" Width="330">
+          <StackPanel Spacing="8">
+            <TextBlock Classes="value" Text="Поменять местами" />
+            <TextBlock Classes="muted" Text="Меняет два узла по позициям (нумерация с 1), перестраивая ссылки. O(n)." />
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+              <TextBox Text="{Binding FirstPositionText}" Classes="mono" Watermark="Позиция 1" />
+              <TextBox Grid.Column="1" Text="{Binding SecondPositionText}" Classes="mono" Watermark="Позиция 2" />
+            </Grid>
+            <Button Classes="primary" Content="Поменять" Command="{Binding SwapPositionsCommand}" />
+          </StackPanel>
+        </Border>
+
+        <Border Classes="card" Width="330">
+          <StackPanel Spacing="8">
+            <TextBlock Classes="value" Text="Результат разбиения" />
+            <Grid ColumnDefinitions="110,*" RowDefinitions="Auto,Auto" RowSpacing="6">
+              <TextBlock Classes="muted" Text="Первый:" />
+              <TextBlock Grid.Column="1" Classes="mono" Text="{Binding SplitFirst}" TextWrapping="Wrap" />
+              <TextBlock Grid.Row="1" Classes="muted" Text="Второй:" />
+              <TextBlock Grid.Row="1" Grid.Column="1" Classes="mono" Text="{Binding SplitSecond}" TextWrapping="Wrap" />
+            </Grid>
+            <TextBlock Classes="muted" Text="Разбиение не изменяет текущий список — оба результата строятся как новые списки." />
+          </StackPanel>
+        </Border>
+
+      </WrapPanel>
+
+      <Border Classes="panel" Padding="16">
+        <StackPanel Spacing="10">
+          <TextBlock Classes="section" Text="ЖУРНАЛ ОПЕРАЦИЙ" />
+          <ListBox ItemsSource="{Binding Log}" Height="340">
+            <ListBox.ItemTemplate>
+              <DataTemplate x:DataType="vm:LinkedListLogEntry">
+                <Border Classes="log-row" Classes.error="{Binding IsError}">
+                  <Grid ColumnDefinitions="38,180,*">
+                    <TextBlock Text="{Binding Number}" Classes="muted" />
+                    <TextBlock Grid.Column="1" Text="{Binding Operation}" Classes="value" />
+                    <TextBlock Grid.Column="2" Text="{Binding Details}" Classes="info" />
+                  </Grid>
+                </Border>
+              </DataTemplate>
+            </ListBox.ItemTemplate>
+          </ListBox>
+        </StackPanel>
+      </Border>
+
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>

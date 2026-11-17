@@ -1,0 +1,181 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:AlgorithmsLab3.App.ViewModels"
+             xmlns:exec="using:AlgorithmsLab3.Domain.Execution"
+             xmlns:bench="using:AlgorithmsLab3.Domain.Benchmarks"
+             x:Class="AlgorithmsLab3.App.Views.StackView"
+             x:DataType="vm:StackPageViewModel">
+
+  <ScrollViewer>
+    <StackPanel Margin="24,18,24,24" Spacing="16">
+
+      <StackPanel Spacing="4">
+        <TextBlock Classes="section" Text="ЧАСТЬ 1 · СТЕК" />
+        <TextBlock Classes="page-title" Text="Стек на собственном связном списке" />
+        <TextBlock Classes="muted" MaxWidth="980"
+                   Text="Команды из input.txt: 1 — Push(elem), 2 — Pop, 3 — Top, 4 — isEmpty, 5 — Print. Для push значение указывается после запятой. Ниже также реализованы вычисление постфиксной записи и перевод инфиксной записи в постфиксную." />
+      </StackPanel>
+
+      <StackPanel Spacing="16">
+
+        <Border Classes="panel" Padding="16">
+          <StackPanel Spacing="10">
+            <TextBlock Classes="section" Text="КОМАНДЫ СТЕКА" />
+            <TextBlock Classes="app-title" Text="input.txt" />
+            <TextBlock Classes="muted"
+                       Text="Пример: 3 4 1,56 1,7 1,cat 2 5 4" />
+
+            <TextBox Text="{Binding CommandInput}"
+                     AcceptsReturn="True"
+                     TextWrapping="NoWrap"
+                     Classes="mono"
+                     Height="150"
+                     ScrollViewer.VerticalScrollBarVisibility="Auto"
+                     ScrollViewer.HorizontalScrollBarVisibility="Auto" />
+
+            <WrapPanel ItemSpacing="8" LineSpacing="8">
+              <Button Classes="primary" Content="Выполнить"
+                      Command="{Binding RunCommandsCommand}" />
+              <Button Classes="ghost" Content="Открыть файл…" Click="LoadFileClick" />
+              <Button Classes="ghost" Content="Пример" Command="{Binding LoadSampleCommand}" />
+              <Button Classes="ghost" Content="Случайный набор" Command="{Binding GenerateRandomCommand}" />
+            </WrapPanel>
+
+            <TextBlock Classes="muted" Text="{Binding RunStatus}" />
+            <TextBlock Classes="muted" Text="{Binding Metrics}" />
+            <Border Classes="card">
+              <StackPanel Spacing="4">
+                <TextBlock Classes="section" Text="СОСТОЯНИЕ СТЕКА (ВЕРШИНА → ОСНОВАНИЕ)" />
+                <TextBlock Classes="mono" Text="{Binding FinalState}" TextWrapping="Wrap" />
+              </StackPanel>
+            </Border>
+
+            <TextBlock Classes="section" Text="ПРОТОКОЛ ОПЕРАЦИЙ" />
+            <ListBox ItemsSource="{Binding Log}" Height="330">
+              <ListBox.ItemTemplate>
+                <DataTemplate x:DataType="exec:OperationLogEntry">
+                  <Border Classes="log-row" Classes.error="{Binding IsError}">
+                    <Grid ColumnDefinitions="42,110,*">
+                      <TextBlock Text="{Binding Index}" Classes="muted" />
+                      <TextBlock Grid.Column="1" Text="{Binding Command}" Classes="mono" />
+                      <TextBlock Grid.Column="2" Text="{Binding Result}" Classes="info" />
+                    </Grid>
+                  </Border>
+                </DataTemplate>
+              </ListBox.ItemTemplate>
+            </ListBox>
+          </StackPanel>
+        </Border>
+
+        <StackPanel Spacing="16">
+
+          <Border Classes="panel" Padding="16">
+            <StackPanel Spacing="10">
+              <TextBlock Classes="section" Text="ВЫЧИСЛЕНИЕ ПОСТФИКСНОЙ ЗАПИСИ" />
+              <TextBlock Classes="app-title" Text="Постфиксный калькулятор" />
+              <TextBlock Classes="muted"
+                         Text="Операции: + − * / : ^ ln cos sin sqrt abs. Пример: 7 8 + 3 2 + /" />
+              <TextBox Text="{Binding PostfixInput}" Classes="mono" Height="60"
+                       AcceptsReturn="True" TextWrapping="Wrap" />
+              <WrapPanel ItemSpacing="8" LineSpacing="8">
+                <Button Classes="primary" Content="Вычислить"
+                        Command="{Binding EvaluatePostfixCommand}" />
+              </WrapPanel>
+              <StackPanel Orientation="Horizontal" Spacing="12">
+                <TextBlock Classes="big-value" Text="{Binding PostfixResult}" />
+                <TextBlock Classes="muted" VerticalAlignment="Center" Text="{Binding PostfixMetrics}" />
+              </StackPanel>
+              <TextBox Text="{Binding PostfixTrace}" IsReadOnly="True" AcceptsReturn="True"
+                       TextWrapping="Wrap" Classes="mono" Height="150"
+                       ScrollViewer.VerticalScrollBarVisibility="Auto" />
+              <TextBlock Classes="muted" Text="{Binding ComplexityText}" />
+            </StackPanel>
+          </Border>
+
+          <Border Classes="panel" Padding="16">
+            <StackPanel Spacing="10">
+              <TextBlock Classes="section" Text="ИНФИКС → ПОСТФИКС" />
+              <TextBlock Classes="app-title" Text="Сортировочная станция Дейкстры" />
+              <TextBlock Classes="muted"
+                         Text="Поддерживаются скобки, унарный минус и функции. Пример: 2 + 2 * (3 - 1) ^ 2 + sqrt(16)" />
+              <TextBox Text="{Binding InfixInput}" Classes="mono" Height="60"
+                       AcceptsReturn="True" TextWrapping="Wrap" />
+              <WrapPanel ItemSpacing="8" LineSpacing="8">
+                <Button Classes="primary" Content="Перевести и вычислить"
+                        Command="{Binding ConvertInfixCommand}" />
+              </WrapPanel>
+              <Grid ColumnDefinitions="90,*" RowDefinitions="Auto,Auto" RowSpacing="6">
+                <TextBlock Classes="muted" Text="Постфикс:" />
+                <TextBlock Grid.Column="1" Classes="mono" Text="{Binding InfixPostfix}" TextWrapping="Wrap" />
+                <TextBlock Grid.Row="1" Classes="muted" Text="Значение:" />
+                <TextBlock Grid.Row="1" Grid.Column="1" Classes="big-value" Text="{Binding InfixResult}" />
+              </Grid>
+              <TextBox Text="{Binding InfixTrace}" IsReadOnly="True" AcceptsReturn="True"
+                       TextWrapping="Wrap" Classes="mono" Height="220"
+                       ScrollViewer.VerticalScrollBarVisibility="Auto" />
+            </StackPanel>
+          </Border>
+
+        </StackPanel>
+
+      </StackPanel>
+
+      <Border Classes="panel" Padding="16">
+        <StackPanel Spacing="10">
+          <Grid ColumnDefinitions="*,Auto">
+            <StackPanel Spacing="2">
+              <TextBlock Classes="section" Text="ЗАМЕРЫ ВРЕМЕНИ" />
+              <TextBlock Classes="app-title" Text="Разные по размеру и составу наборы команд" />
+              <TextBlock Classes="muted" MaxWidth="900"
+                         Text="Для каждого набора создаётся файл, измеряется чтение файла и выполнение операций стеком. Наборы включают push-heavy, push/pop и print-heavy сценарии." />
+            </StackPanel>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8" VerticalAlignment="Top">
+              <Button Classes="primary" Content="Запустить замеры"
+                      Command="{Binding RunBenchmarksCommand}" />
+              <Button Classes="ghost" Content="Экспорт CSV" Click="ExportBenchmarksClick" />
+            </StackPanel>
+          </Grid>
+
+          <TextBlock Classes="muted" Text="{Binding BenchmarkStatus}" />
+
+          <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+            <StackPanel MinWidth="760" Spacing="0">
+              <Grid ColumnDefinitions="2.2*,80,100,100,100,95,80"
+                    Margin="8,4,8,2">
+                <TextBlock Classes="section" Text="НАБОР" Margin="0" />
+                <TextBlock Grid.Column="1" Classes="section" Text="ОПЕРАЦИЙ" Margin="0" />
+                <TextBlock Grid.Column="2" Classes="section" Text="ЧТЕНИЕ" Margin="0" />
+                <TextBlock Grid.Column="3" Classes="section" Text="ВЫПОЛНЕНИЕ" Margin="0" />
+                <TextBlock Grid.Column="4" Classes="section" Text="ИТОГО" Margin="0" />
+                <TextBlock Grid.Column="5" Classes="section" Text="МКС / ОП" Margin="0" />
+                <TextBlock Grid.Column="6" Classes="section" Text="В СТЕКЕ" Margin="0" />
+              </Grid>
+
+              <ItemsControl ItemsSource="{Binding BenchmarkRows}">
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate x:DataType="bench:StackBenchmarkRow">
+                    <Border Classes="log-row">
+                      <Grid ColumnDefinitions="2.2*,80,100,100,100,95,80">
+                        <StackPanel Spacing="1">
+                          <TextBlock Text="{Binding Name}" Classes="value" />
+                          <TextBlock Text="{Binding Description}" Classes="muted" FontSize="11" />
+                        </StackPanel>
+                        <TextBlock Grid.Column="1" Classes="mono" Text="{Binding Operations}" />
+                        <TextBlock Grid.Column="2" Classes="mono" Text="{Binding ReadMilliseconds, StringFormat={}{0:F3} мс}" />
+                        <TextBlock Grid.Column="3" Classes="mono" Text="{Binding ExecuteMilliseconds, StringFormat={}{0:F3} мс}" />
+                        <TextBlock Grid.Column="4" Classes="mono" Text="{Binding TotalMilliseconds, StringFormat={}{0:F3} мс}" />
+                        <TextBlock Grid.Column="5" Classes="mono" Text="{Binding MicrosecondsPerOperation, StringFormat={}{0:F3}}" />
+                        <TextBlock Grid.Column="6" Classes="mono" Text="{Binding FinalCount}" />
+                      </Grid>
+                    </Border>
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+            </StackPanel>
+          </ScrollViewer>
+        </StackPanel>
+      </Border>
+
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>

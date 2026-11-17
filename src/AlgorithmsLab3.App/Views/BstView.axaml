@@ -1,0 +1,82 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:AlgorithmsLab3.App.ViewModels"
+             xmlns:controls="using:AlgorithmsLab3.App.Controls"
+             x:Class="AlgorithmsLab3.App.Views.BstView"
+             x:DataType="vm:BstPageViewModel">
+
+  <ScrollViewer>
+    <StackPanel Margin="24,18,24,24" Spacing="16">
+
+      <StackPanel Spacing="4">
+        <TextBlock Classes="section" Text="ЧАСТЬ 3 · ДЕРЕВО" />
+        <TextBlock Classes="page-title" Text="Двоичное дерево поиска как динамическое множество" />
+        <TextBlock Classes="muted" MaxWidth="1050"
+                   Text="Дерево хранит уникальные целые числа. Вставка, поиск и удаление идут по инварианту BST; при удалении узла с двумя детьми на его место встаёт минимальный узел правого поддерева. Обходы реализованы итеративно на собственном стеке и очереди." />
+      </StackPanel>
+
+      <Border Classes="panel" Padding="16">
+        <StackPanel Spacing="10">
+          <TextBlock Classes="section" Text="ОПЕРАЦИИ С МНОЖЕСТВОМ" />
+          <TextBlock Classes="app-title" Text="Значение" />
+          <Grid ColumnDefinitions="*,Auto,Auto,Auto" ColumnSpacing="8">
+            <TextBox Text="{Binding ValueText}" Classes="mono" Watermark="Например, 42" />
+            <Button Grid.Column="1" Classes="primary" Content="Вставить" Command="{Binding InsertCommand}" />
+            <Button Grid.Column="2" Classes="ghost" Content="Удалить" Command="{Binding RemoveCommand}" />
+            <Button Grid.Column="3" Classes="ghost" Content="Содержит?" Command="{Binding ContainsCommand}" />
+          </Grid>
+
+          <WrapPanel ItemSpacing="8" LineSpacing="8">
+            <Button Classes="ghost" Content="Минимум" Command="{Binding MinCommand}" />
+            <Button Classes="ghost" Content="Максимум" Command="{Binding MaxCommand}" />
+            <Button Classes="ghost" Content="Случайное дерево" Command="{Binding RandomTreeCommand}" />
+            <Button Classes="danger" Content="Очистить" Command="{Binding ClearCommand}" />
+          </WrapPanel>
+
+          <TextBlock Classes="muted" Text="{Binding Status}" />
+
+          <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+            <Border Classes="card">
+              <StackPanel Spacing="4">
+                <TextBlock Classes="section" Text="СОСТОЯНИЕ" />
+                <TextBlock Classes="info" Text="{Binding Stats}" />
+              </StackPanel>
+            </Border>
+            <Border Grid.Column="1" Classes="card">
+              <StackPanel Spacing="4">
+                <TextBlock Classes="section" Text="СЛОЖНОСТЬ" />
+                <TextBlock Classes="info" Text="Вставка / поиск / удаление: O(h)" />
+                <TextBlock Classes="muted" Text="В среднем h ≈ log₂n, в худшем случае h = n." />
+              </StackPanel>
+            </Border>
+          </Grid>
+
+          <TextBlock Classes="section" Text="ОБХОД ДЕРЕВА" Margin="0,8,0,0" />
+          <ComboBox ItemsSource="{Binding TraversalOptions}"
+                    SelectedItem="{Binding SelectedTraversalOption}"
+                    HorizontalAlignment="Stretch">
+            <ComboBox.ItemTemplate>
+              <DataTemplate x:DataType="vm:TraversalOption">
+                <TextBlock Text="{Binding Title}" />
+              </DataTemplate>
+            </ComboBox.ItemTemplate>
+          </ComboBox>
+          <TextBox Text="{Binding TraversalText}" IsReadOnly="True"
+                   AcceptsReturn="True" TextWrapping="Wrap" Classes="mono" Height="90"
+                   ScrollViewer.VerticalScrollBarVisibility="Auto" />
+        </StackPanel>
+      </Border>
+
+      <Border Classes="panel" Padding="16">
+        <StackPanel Spacing="6">
+          <TextBlock Classes="section" Text="ВИЗУАЛИЗАЦИЯ" />
+          <TextBlock Classes="app-title" Text="Структура дерева" />
+          <controls:TreeCanvas Height="560" Snapshot="{Binding Snapshot}" />
+          <TextBlock Classes="muted"
+                     Text="Оранжевый узел — результат последнего поиска, вставки, минимума или максимума. Симметричный обход in-order выводит значения по возрастанию — это проверка инварианта BST." />
+        </StackPanel>
+      </Border>
+
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>
