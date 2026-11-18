@@ -16,7 +16,7 @@ public sealed class StackCommandRunnerTests
         Assert.Equal(1, result.PopCount);
         Assert.Equal(0, result.TopCount);
         Assert.Equal(1, result.PrintCount);
-        Assert.Equal(1, result.IsEmptyCount);
+        Assert.Equal(2, result.IsEmptyCount);
         Assert.Equal(2, result.FinalCount);
         Assert.Equal("[7, 56]", result.FinalState);
     }

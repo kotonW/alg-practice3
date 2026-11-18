@@ -18,6 +18,9 @@
     <DataTemplate DataType="vm:DfsPageViewModel">
       <views:DfsView />
     </DataTemplate>
+    <DataTemplate DataType="vm:BfsPageViewModel">
+      <views:BfsView />
+    </DataTemplate>
     <DataTemplate DataType="vm:BstPageViewModel">
       <views:BstView />
     </DataTemplate>

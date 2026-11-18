@@ -18,6 +18,7 @@ public partial class MainWindowViewModel : ObservableObject
         var queue = new QueuePageViewModel();
         var cycle = new CyclePageViewModel();
         var dfs = new DfsPageViewModel();
+        var bfs = new BfsPageViewModel();
         var bst = new BstPageViewModel();
         var lists = new LinkedListPageViewModel();
         var about = new AboutPageViewModel();
@@ -51,6 +52,13 @@ public partial class MainWindowViewModel : ObservableObject
                 Title = "DFS на стеке",
                 Subtitle = "Итеративный обход графа",
                 Content = dfs,
+            },
+            new NavigationItem
+            {
+                Badge = "3",
+                Title = "BFS на очереди",
+                Subtitle = "Обход графа в ширину",
+                Content = bfs,
             },
             new NavigationItem
             {

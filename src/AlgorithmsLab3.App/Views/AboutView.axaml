@@ -22,7 +22,7 @@
           <TextBlock Classes="info"
                      Text="Часть 2. Очередь на собственном списке и через стандартный Queue&lt;T&gt;, общий протокол выполнения, автоматическое сравнение результатов, замеры для разных по длине и составу наборов." />
           <TextBlock Classes="info"
-                     Text="Часть 3. Применения динамических структур: обнаружение цикла в списке алгоритмом Флойда, итеративный DFS графа на стеке, BST как динамическое множество." />
+                     Text="Часть 3. Применения динамических структур: обнаружение цикла в списке алгоритмом Флойда, итеративный DFS графа на стеке, обход графа в ширину BFS на очереди, BST как динамическое множество." />
           <TextBlock Classes="info"
                      Text="Часть 4. 12 алгоритмов над собственным связным списком: переворот, переносы, уникальность, вставки/удаления, разбиение, удвоение, обмен узлов." />
         </StackPanel>
@@ -59,7 +59,7 @@
           <StackPanel Spacing="8">
             <TextBlock Classes="section" Text="СТРУКТУРА ПРОЕКТА" />
             <TextBlock Classes="mono" TextWrapping="Wrap"
-                       Text="Algorithms_lab3/&#10;  src/AlgorithmsLab3.Domain/&#10;    Stacks/ LinkedStack.cs&#10;    Queues/ LinkedQueue.cs&#10;    Lists/ IntLinkedList.cs&#10;    Expressions/ postfix + shunting yard&#10;    Applications/ Floyd, DFS, BST&#10;    Benchmarks/ сценарии замеров&#10;  src/AlgorithmsLab3.App/&#10;    ViewModels/ страницы&#10;    Views/ Avalonia XAML&#10;    Controls/ визуализация&#10;  tests/AlgorithmsLab3.Tests/" />
+                       Text="Algorithms_lab3/&#10;  src/AlgorithmsLab3.Domain/&#10;    Stacks/ LinkedStack.cs&#10;    Queues/ LinkedQueue.cs&#10;    Lists/ IntLinkedList.cs&#10;    Expressions/ postfix + shunting yard&#10;    Applications/ Floyd, DFS, BFS, BST&#10;    Benchmarks/ сценарии замеров&#10;  src/AlgorithmsLab3.App/&#10;    ViewModels/ страницы&#10;    Views/ Avalonia XAML&#10;    Controls/ визуализация&#10;  tests/AlgorithmsLab3.Tests/" />
             <TextBlock Classes="muted"
                        Text="Доменный проект не ссылается на Avalonia: алгоритмы можно проверить тестами и использовать отдельно." />
           </StackPanel>

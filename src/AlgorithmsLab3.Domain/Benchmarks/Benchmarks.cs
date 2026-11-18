@@ -255,19 +255,18 @@ public static class BenchmarkScenarios
 
 public static class BenchmarkRunner
 {
-    private static readonly string BenchmarkDirectory = Path.Combine(
-        Path.GetTempPath(),
-        "algorithms-lab3-benchmarks");
+    private static readonly Lazy<string> BenchmarkDirectory = new(ResolveBenchmarkDirectory);
 
     public static IReadOnlyList<StackBenchmarkRow> RunStackBenchmarks(Action<string>? report = null)
     {
-        Directory.CreateDirectory(BenchmarkDirectory);
+        var directory = BenchmarkDirectory.Value;
+        Directory.CreateDirectory(directory);
         var rows = new List<StackBenchmarkRow>();
 
         foreach (var scenario in BenchmarkScenarios.Stack())
         {
             report?.Invoke($"Стек: {scenario.Name}");
-            var path = WriteScenarioFile("stack", scenario);
+            var path = WriteScenarioFile(directory, "stack", scenario);
             var readWatch = System.Diagnostics.Stopwatch.StartNew();
             var text = File.ReadAllText(path);
             readWatch.Stop();
@@ -296,13 +295,14 @@ public static class BenchmarkRunner
 
     public static IReadOnlyList<QueueBenchmarkRow> RunQueueBenchmarks(Action<string>? report = null)
     {
-        Directory.CreateDirectory(BenchmarkDirectory);
+        var directory = BenchmarkDirectory.Value;
+        Directory.CreateDirectory(directory);
         var rows = new List<QueueBenchmarkRow>();
 
         foreach (var scenario in BenchmarkScenarios.Queue())
         {
             report?.Invoke($"Очередь: {scenario.Name}");
-            var path = WriteScenarioFile("queue", scenario);
+            var path = WriteScenarioFile(directory, "queue", scenario);
 
             var linkedReadWatch = System.Diagnostics.Stopwatch.StartNew();
             var linkedText = File.ReadAllText(path);
@@ -344,12 +344,41 @@ public static class BenchmarkRunner
         return rows;
     }
 
-    private static string WriteScenarioFile(string prefix, BenchmarkScenario scenario)
+    private static string WriteScenarioFile(string directory, string prefix, BenchmarkScenario scenario)
     {
         var safeName = string.Concat(scenario.Name.Select(character =>
             Path.GetInvalidFileNameChars().Contains(character) ? '_' : character));
-        var path = Path.Combine(BenchmarkDirectory, $"{prefix}-{safeName}.txt");
+        var path = Path.Combine(directory, $"{prefix}-{safeName}.txt");
         File.WriteAllText(path, scenario.Input, Encoding.UTF8);
         return path;
+    }
+
+    private static string ResolveBenchmarkDirectory()
+    {
+        var candidates = new[]
+        {
+            Path.Combine(Path.GetTempPath(), "algorithms-lab3-benchmarks"),
+            Path.Combine(AppContext.BaseDirectory, "algorithms-lab3-benchmarks"),
+        };
+
+        foreach (var candidate in candidates)
+        {
+            try
+            {
+                Directory.CreateDirectory(candidate);
+                var probe = Path.Combine(candidate, ".write-probe");
+                File.WriteAllText(probe, "ok");
+                File.Delete(probe);
+                return candidate;
+            }
+            catch (Exception exception) when (exception is UnauthorizedAccessException or IOException)
+            {
+                // Пробуем следующий каталог: среда может запрещать запись в %TEMP%.
+            }
+        }
+
+        var fallback = Path.Combine(Directory.GetCurrentDirectory(), "algorithms-lab3-benchmarks");
+        Directory.CreateDirectory(fallback);
+        return fallback;
     }
 }
