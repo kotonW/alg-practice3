@@ -47,6 +47,7 @@
           <SolidColorBrush x:Key="AppGoodBrush" Color="#54D18C" />
           <SolidColorBrush x:Key="AppWarnBrush" Color="#F2B84B" />
           <SolidColorBrush x:Key="AppBadBrush" Color="#F06A6A" />
+          <SolidColorBrush x:Key="AppBadSoftBrush" Color="#3A1D22" />
           <SolidColorBrush x:Key="AppChipBrush" Color="#20283A" />
         </ResourceDictionary>
         <ResourceDictionary x:Key="Light">
@@ -61,6 +62,7 @@
           <SolidColorBrush x:Key="AppGoodBrush" Color="#15803D" />
           <SolidColorBrush x:Key="AppWarnBrush" Color="#B45309" />
           <SolidColorBrush x:Key="AppBadBrush" Color="#DC2626" />
+          <SolidColorBrush x:Key="AppBadSoftBrush" Color="#FDECEC" />
           <SolidColorBrush x:Key="AppChipBrush" Color="#E9EEF7" />
         </ResourceDictionary>
       </ResourceDictionary.ThemeDictionaries>

@@ -142,7 +142,7 @@
   </Style>
 
   <Style Selector="Border.log-row.error">
-    <Setter Property="Background" Value="#2A171B" />
+    <Setter Property="Background" Value="{DynamicResource AppBadSoftBrush}" />
   </Style>
 
   <Style Selector="ListBox">
