@@ -75,28 +75,28 @@ public sealed class IntLinkedListTests
     }
 
     [Fact]
-    public void RemoveNonUnique_KeepsOnlyValuesSeenOnce()
+    public void RemoveNonUnique_KeepsFirstOccurrenceOfEachValue()
     {
         var list = List(5, 3, 8, 3, 1, 9, 5, 2);
 
         var removed = list.RemoveNonUnique();
 
-        Assert.Equal(4, removed);
-        Assert.Equal([8, 1, 9, 2], list.ToList());
-        Assert.Equal(4, list.Count);
+        Assert.Equal(2, removed);
+        Assert.Equal([5, 3, 8, 1, 9, 2], list.ToList());
+        Assert.Equal(6, list.Count);
         Assert.Equal(2, list.TailValue);
     }
 
     [Fact]
-    public void RemoveNonUnique_OnAllDuplicates_LeavesEmptyList()
+    public void RemoveNonUnique_OnAllDuplicates_KeepsSingleValue()
     {
         var list = List(7, 7, 7);
 
-        Assert.Equal(3, list.RemoveNonUnique());
-        Assert.True(list.IsEmpty);
-        Assert.Null(list.HeadValue);
-        Assert.Null(list.TailValue);
-        Assert.Equal(0, list.Count);
+        Assert.Equal(2, list.RemoveNonUnique());
+        Assert.False(list.IsEmpty);
+        Assert.Equal(7, list.HeadValue);
+        Assert.Equal(7, list.TailValue);
+        Assert.Equal(1, list.Count);
     }
 
     [Fact]

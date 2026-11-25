@@ -167,7 +167,7 @@ public partial class LinkedListPageViewModel : ObservableObject
     private void RemoveNonUnique() => Perform("Удалить неуникальные", () =>
     {
         var removed = _list.RemoveNonUnique();
-        return $"Удалено {removed} узлов; остались только значения, встречающиеся ровно один раз.";
+        return $"Удалено {removed} повторных вхождений; каждое значение осталось в списке один раз.";
     });
 
     [RelayCommand]

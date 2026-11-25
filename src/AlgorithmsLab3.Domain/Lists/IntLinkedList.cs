@@ -143,7 +143,10 @@ public sealed class IntLinkedList
         return set.Count;
     }
 
-    /// <summary>Удаляет элементы, встречающиеся более одного раза. Возвращает число удалённых.</summary>
+    /// <summary>
+    /// Удаляет повторные вхождения значений, оставляя первое из них.
+    /// Возвращает число удалённых узлов.
+    /// </summary>
     public int RemoveNonUnique()
     {
         if (_head is null)
@@ -151,15 +154,40 @@ public sealed class IntLinkedList
             return 0;
         }
 
-        var frequencies = new Dictionary<int, int>();
-        for (var node = _head; node is not null; node = node.Next)
+        var seen = new HashSet<int>();
+        var removed = 0;
+        SinglyNode<int>? previous = null;
+        var current = _head;
+        while (current is not null)
         {
-            frequencies[node.Value] = frequencies.GetValueOrDefault(node.Value) + 1;
+            var next = current.Next;
+            if (seen.Add(current.Value))
+            {
+                previous = current;
+            }
+            else
+            {
+                if (previous is null)
+                {
+                    _head = next;
+                }
+                else
+                {
+                    previous.Next = next;
+                }
+
+                if (ReferenceEquals(_tail, current))
+                {
+                    _tail = previous;
+                }
+
+                Count--;
+                removed++;
+            }
+
+            current = next;
         }
 
-        var kept = ToList().Where(value => frequencies[value] == 1).ToList();
-        var removed = Count - kept.Count;
-        Replace(kept);
         return removed;
     }
 

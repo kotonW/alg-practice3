@@ -99,7 +99,7 @@
         <Border Classes="card" Width="330">
           <StackPanel Spacing="8">
             <TextBlock Classes="value" Text="Удалить неуникальные" />
-            <TextBlock Classes="muted" Text="Оставляет только значения, встречающиеся ровно один раз. O(n)." />
+            <TextBlock Classes="muted" Text="Удаляет повторные вхождения, оставляя первое из них. O(n)." />
             <Button Classes="primary" Content="Выполнить" Command="{Binding RemoveNonUniqueCommand}" />
           </StackPanel>
         </Border>

@@ -18,3 +18,5 @@ public sealed record GraphVisualization(
     bool Directed);
 
 public sealed record BstSnapshot(BstNode? Root, int Count, int Height, int? HighlightValue);
+
+public sealed record PostfixTreeSnapshot(PostfixNode? Root, int Count, int Height, int Leaves);

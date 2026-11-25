@@ -27,8 +27,8 @@
     <DataTemplate DataType="vm:LinkedListPageViewModel">
       <views:LinkedListView />
     </DataTemplate>
-    <DataTemplate DataType="vm:AboutPageViewModel">
-      <views:AboutView />
+    <DataTemplate DataType="vm:PostfixTreePageViewModel">
+      <views:PostfixTreeView />
     </DataTemplate>
   </Application.DataTemplates>
 

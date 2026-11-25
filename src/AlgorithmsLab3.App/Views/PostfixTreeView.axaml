@@ -1,0 +1,55 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:AlgorithmsLab3.App.ViewModels"
+             xmlns:controls="using:AlgorithmsLab3.App.Controls"
+             x:Class="AlgorithmsLab3.App.Views.PostfixTreeView"
+             x:DataType="vm:PostfixTreePageViewModel">
+
+  <ScrollViewer>
+    <StackPanel Margin="24,18,24,24" Spacing="16">
+
+      <StackPanel Spacing="4">
+        <TextBlock Classes="section" Text="ЧАСТЬ 5 · БИНАРНОЕ ДЕРЕВО" />
+        <TextBlock Classes="page-title" Text="Бинарное дерево из постфиксной записи" />
+        <TextBlock Classes="muted" MaxWidth="1050"
+                   Text="Значения задают узлы дерева, а * отмечает отсутствие потомка. Узел получает левое и правое поддерево по порядку, поэтому лист записывается как «значение * *». Метки могут быть числами, буквами или словами." />
+      </StackPanel>
+
+      <Border Classes="panel" Padding="16">
+        <StackPanel Spacing="10">
+          <TextBlock Classes="section" Text="ПОСТРОЕНИЕ ДЕРЕВА" />
+          <TextBlock Classes="app-title" Text="Запись дерева" />
+          <Grid ColumnDefinitions="*,Auto,Auto,Auto" ColumnSpacing="8">
+            <TextBox Text="{Binding RecordText}" Classes="mono"
+                     Watermark="Например, 5 3 1 * * 4 * * 8 * *" />
+            <Button Grid.Column="1" Classes="primary" Content="Построить" Command="{Binding BuildCommand}" />
+            <Button Grid.Column="2" Classes="ghost" Content="Пример" Command="{Binding ExampleCommand}" />
+            <Button Grid.Column="3" Classes="danger" Content="Очистить" Command="{Binding ClearCommand}" />
+          </Grid>
+
+          <TextBlock Classes="muted" Text="{Binding Status}" />
+          <TextBlock Classes="muted"
+                     Text="Например, 5 3 1 * * 4 * * 8 * * — корень 5, его потомки 3 и 8; у узла 3 потомки 1 и 4, узел 8 — лист." />
+
+          <Border Classes="card">
+            <StackPanel Spacing="4">
+              <TextBlock Classes="section" Text="СОСТОЯНИЕ" />
+              <TextBlock Classes="info" Text="{Binding Stats}" />
+            </StackPanel>
+          </Border>
+        </StackPanel>
+      </Border>
+
+      <Border Classes="panel" Padding="16">
+        <StackPanel Spacing="6">
+          <TextBlock Classes="section" Text="ВИЗУАЛИЗАЦИЯ" />
+          <TextBlock Classes="app-title" Text="Структура дерева" />
+          <controls:PostfixTreeCanvas Height="520" Snapshot="{Binding Snapshot}" />
+          <TextBlock Classes="muted"
+                     Text="Корень — первый узел записи. Потомки располагаются слева и справа, листья не имеют исходящих связей." />
+        </StackPanel>
+      </Border>
+
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>

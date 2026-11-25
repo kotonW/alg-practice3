@@ -21,7 +21,7 @@ public partial class MainWindowViewModel : ObservableObject
         var bfs = new BfsPageViewModel();
         var bst = new BstPageViewModel();
         var lists = new LinkedListPageViewModel();
-        var about = new AboutPageViewModel();
+        var postfixTree = new PostfixTreePageViewModel();
 
         Items =
         [
@@ -76,10 +76,10 @@ public partial class MainWindowViewModel : ObservableObject
             },
             new NavigationItem
             {
-                Badge = "i",
-                Title = "О работе",
-                Subtitle = "Структура проекта и сложность",
-                Content = about,
+                Badge = "5",
+                Title = "Бинарное дерево",
+                Subtitle = "Построение из постфиксной записи",
+                Content = postfixTree,
             },
         ];
 
